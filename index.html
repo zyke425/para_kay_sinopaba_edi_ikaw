@@ -514,6 +514,33 @@
             transform: translateY(-2px);
         }
 
+        .floating-music-btn {
+            position: fixed;
+            right: 22px;
+            bottom: 95px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #ff7aa2, #ff4f7b);
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            z-index: 9999;
+            cursor: pointer;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .floating-music-btn.show {
+            display: block;
+        }
+
+        .floating-music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+        }
+
         /* Gift opening animations */
         .gift-wrapper.opened .gift-lid {
             transform: translateY(-80px) rotate(-15deg) scale(1.1);
@@ -863,6 +890,14 @@
                 text-align: center;
             }
 
+            .floating-music-btn {
+                right: 18px;
+                bottom: 85px;
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+            }
+
             .slideshow-container {
                 max-height: calc(100vh - 400px);
                 min-height: 100px;
@@ -962,6 +997,14 @@
                 max-height: calc(100vh - 140px);
                 padding: 8px 12px 60px;
                 font-size: 0.95rem;
+            }
+
+            .floating-music-btn {
+                right: 15px;
+                bottom: 75px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
         }
     </style>
@@ -1070,6 +1113,12 @@
             <button class="btn-interactive" onclick="openMessageModal()">Read! NAAA :<</button>
         </div>
 
+        <audio id="bgMusic" loop>
+            <source src="snaptik_7513560886288682262_v3.mp3" type="audio/mpeg">
+        </audio>
+
+        <button id="musicBtn" class="floating-music-btn">🎵</button>
+
     </div>
 
     <!-- Hidden Deep Emotional Message Modal -->
@@ -1085,7 +1134,7 @@
                  lalo na LDR tayo.
                 <br><br>
               May mga times na hindi tayo nagkakaintindihan, may mga bagay na naging mabigat, 
-              pero imm still thankful sa memories and sa time na naging part ka ng life ko. Im happy na okay na tayo ngayon, 
+              pero I'm still thankful sa memories and sa time na naging part ka ng life ko. I'm happy na okay na tayo ngayon, 
               and on your birthday, I just want to wish you genuine happiness, peace, and all the good things you deserve.
 
                 <br><br>
@@ -1101,6 +1150,10 @@
         const particlesContainer = document.getElementById('particles');
         const particleCount = 45;
         const shapes = ['🎈', '🎉', '🎂', '🎁', '✨', '💖', '🌸', '💫', '❤️'];
+
+        // Music Control Variables
+        const music = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("musicBtn");
 
         for (let i = 0; i < particleCount; i++) {
             createAmbientParticle();
@@ -1195,6 +1248,7 @@
                 setTimeout(() => {
                     cakeScene.style.display = 'none';
                     card.classList.add('show');
+                    musicBtn.classList.add('show');
                     startSlideshow();
                 }, 1500);
             }, 4500); // Plenty of time to enjoy the split animation
@@ -1364,6 +1418,16 @@
 
             document.getElementById('cakeLeft').innerHTML = cakeDOM;
             document.getElementById('cakeRight').innerHTML = cakeDOM;
+        });
+
+        musicBtn.addEventListener("click", () => {
+            if (music.paused) {
+                music.play();
+                musicBtn.textContent = "⏸";
+            } else {
+                music.pause();
+                musicBtn.textContent = "🎵";
+            }
         });
     </script>
 </body>
